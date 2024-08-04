@@ -15,8 +15,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
+from ticket import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    #1
+    path('django/no_rest_no_model/',views.no_rest_no_model),
+    #2
+    path('django/no_rest_with_model/',views.no_rest_with_model),
+    #3.1 FBV [GET , POST]
+    path('rest/fbv/',views.FBV_list),
+    #3.2 FBV [GET , PUT , DELETE]
+    path('rest/fbv/<int:pk>/',views.FBV_pk),
+    
 ]
