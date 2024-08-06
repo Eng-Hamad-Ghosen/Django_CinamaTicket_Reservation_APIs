@@ -2,9 +2,13 @@ from django.shortcuts import render
 from django.http.response import JsonResponse
 from.models import Guest,Movie,Reservation
 from .serializers import GuestSerializer,MovieSerializer,ReservationSerializer
+<<<<<<< HEAD
 
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
+=======
+from rest_framework.decorators import api_view
+>>>>>>> ab26fb22a302a125c3ce5e6ec486d9bb72884fd8
 from rest_framework.response import Response
 from rest_framework import status
 # Create your views here.
@@ -56,6 +60,7 @@ def FBV_list(request):
             return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 
+<<<<<<< HEAD
 #3.2 [GET,PUT,DELETE]
 @api_view(['GET','DELETE','PUT'])
 def FBV_pk(request,pk):
@@ -82,3 +87,14 @@ def FBV_pk(request,pk):
         return Response (serializer.data,status=status.HTTP_200_OK)
 
 
+=======
+#3.2 [PUT,DELETE]
+# @api_view(['PUT','DELETE'])
+# def rest_model(request):
+#     #PUT
+#     if request.method=='PUT':
+#         pass
+#     #DELETE
+#     if request.method=='DELETE':
+#         pass
+>>>>>>> ab26fb22a302a125c3ce5e6ec486d9bb72884fd8
