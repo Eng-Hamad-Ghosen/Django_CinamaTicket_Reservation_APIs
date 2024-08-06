@@ -35,4 +35,8 @@ urlpatterns = [
     #4.2 CBV [GET,PUST,DELETE] With pk
     path('rest/cbv/<int:pk>',views.CBV_pk.as_view()),
     
+    #5.1 Mixins [GET , POST]
+    path('rest/mixin/',views.Mixins_list.as_view()),
+    #5.2 Mixin [GET , PUT , DELETE] with pk
+    path('rest/mixin/<int:pk>',views.Mixin_pk.as_view()),
 ]
