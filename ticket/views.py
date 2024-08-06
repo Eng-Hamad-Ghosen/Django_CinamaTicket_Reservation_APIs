@@ -2,13 +2,11 @@ from django.shortcuts import render
 from django.http.response import JsonResponse
 from.models import Guest,Movie,Reservation
 from .serializers import GuestSerializer,MovieSerializer,ReservationSerializer
-<<<<<<< HEAD
 
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
-=======
-from rest_framework.decorators import api_view
->>>>>>> ab26fb22a302a125c3ce5e6ec486d9bb72884fd8
+
+
 from rest_framework.response import Response
 from rest_framework import status
 # Create your views here.
@@ -60,7 +58,6 @@ def FBV_list(request):
             return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 
-<<<<<<< HEAD
 #3.2 [GET,PUT,DELETE]
 @api_view(['GET','DELETE','PUT'])
 def FBV_pk(request,pk):
@@ -80,21 +77,57 @@ def FBV_pk(request,pk):
             serializer.save()
             return Response(serializer.data,status= status.HTTP_202_ACCEPTED)
         else:
-            return Response(data=serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
         
     elif request.method=='DELETE':
         guest.delete()
-        return Response (serializer.data,status=status.HTTP_200_OK)
+        return Response (serializer.data,status=status.HTTP_204_NO_CONTENT)
 
+#4 CBV
+#4.1 [GET,POST]
+class CBV_list(APIView):
+    def get(self,request):  
+        try:
+            guest = Guest.objects.all()
+        except Guest.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        
+        serializer=GuestSerializer(guest,many=True)
+        return Response(data=serializer.data ,status=status.HTTP_302_FOUND)
+        
+    def post(self,request):
+        serializer=GuestSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(data=serializer.data,status=status.HTTP_201_CREATED)
+        else:
+            return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-=======
-#3.2 [PUT,DELETE]
-# @api_view(['PUT','DELETE'])
-# def rest_model(request):
-#     #PUT
-#     if request.method=='PUT':
-#         pass
-#     #DELETE
-#     if request.method=='DELETE':
-#         pass
->>>>>>> ab26fb22a302a125c3ce5e6ec486d9bb72884fd8
+#4.2 CBV with pk [GET,PUT,DELETE]
+class CBV_pk(APIView):
+    def get(self,request,pk):
+        try:
+            guest= Guest.objects.get(pk=pk)
+        except Guest.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        
+        serializer=GuestSerializer(guest)
+        return Response(serializer.data, status=status.HTTP_302_FOUND)
+    
+    def put(self,request,pk):
+        try:
+            guest= Guest.objects.get(pk=pk)
+        except Guest.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        serializer=GuestSerializer(guest,request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data,status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+    def delete(self,request,pk):
+        guest=Guest.objects.get(pk=pk)
+        guest.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+        

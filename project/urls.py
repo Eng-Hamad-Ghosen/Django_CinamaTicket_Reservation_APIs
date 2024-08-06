@@ -24,14 +24,15 @@ urlpatterns = [
     path('django/no_rest_no_model/',views.no_rest_no_model),
     #2
     path('django/no_rest_with_model/',views.no_rest_with_model),
-<<<<<<< HEAD
+    
     #3.1 FBV [GET , POST]
     path('rest/fbv/',views.FBV_list),
-    #3.2 FBV [GET , PUT , DELETE]
+    #3.2 FBV [GET , PUT , DELETE] With pk
     path('rest/fbv/<int:pk>/',views.FBV_pk),
     
-=======
-    #3
-    path('rest/fbv_list/',views.FBV_list),
->>>>>>> ab26fb22a302a125c3ce5e6ec486d9bb72884fd8
+    #4.1 CBV [GET , POST]
+    path('rest/cbv/',views.CBV_list.as_view()),
+    #4.2 CBV [GET,PUST,DELETE] With pk
+    path('rest/cbv/<int:pk>',views.CBV_pk.as_view()),
+    
 ]
