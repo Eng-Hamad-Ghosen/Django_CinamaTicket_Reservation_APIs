@@ -39,4 +39,9 @@ urlpatterns = [
     path('rest/mixin/',views.Mixins_list.as_view()),
     #5.2 Mixin [GET , PUT , DELETE] with pk
     path('rest/mixin/<int:pk>',views.Mixin_pk.as_view()),
+    
+    #6.1 Generics [GET , POST]
+    path('rest/generic/',views.Generics_list.as_view()),
+    #6.2 Generics [GET , PUT , DELETE] With pk
+    path('rest/generic/<int:pk>',views.Generics_pk.as_view()),
 ]
