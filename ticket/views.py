@@ -10,7 +10,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from rest_framework import generics,mixins
+from rest_framework import generics,mixins,viewsets
 # Create your views here.
 
 #1 without Resetframework and no model query
@@ -169,3 +169,9 @@ class Generics_list(generics.ListCreateAPIView):
 class Generics_pk(generics.RetrieveUpdateDestroyAPIView):
     queryset = Guest.objects.all()
     serializer_class=GuestSerializer
+    
+#Viewsets [GET,POST, PUT , DELETE] With pk and Without
+class Viewsets_guest(viewsets.ModelViewSet):
+    queryset = Guest.objects.all()
+    serializer_class=GuestSerializer
+    
