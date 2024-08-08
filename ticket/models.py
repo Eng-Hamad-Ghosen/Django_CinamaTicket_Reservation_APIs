@@ -25,3 +25,6 @@ class Guest(models.Model):
 class Reservation(models.Model):
     guest=models.ForeignKey("Guest",related_name='reservation_guest',on_delete=models.CASCADE)
     movie=models.ForeignKey("Movie",related_name='reservation_movie',on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.guest.name +'/\\'+ self.movie.movie

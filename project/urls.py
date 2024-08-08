@@ -57,4 +57,7 @@ urlpatterns = [
     
     #8 Find movie
     path('rest/findMove/',views.find_movie),
+    
+    #9 create reservation
+    path('rest/createReservation/',views.create_reservation),
 ]

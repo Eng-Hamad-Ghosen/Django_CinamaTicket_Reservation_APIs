@@ -203,3 +203,26 @@ def find_movie(request):
         return Response(serializer.data,status=status.HTTP_302_FOUND)
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
+    
+#9 create reservation[POST]
+@api_view(['GET','POST'])
+def create_reservation(request):
+    if request.method=='GET':
+        res=Reservation.objects.all()
+        serializer=ReservationSerializer(res,many=True)
+        return Response(serializer.data)
+    
+    if request.method=='POST':
+        movie=Movie.objects.get(hall=request.data['hall'],movie=request.data['movie'])
+        
+        guest=Guest()
+        guest.name=request.data['name']
+        guest.mobile=request.data['mobile']
+        guest.save()
+        
+        reservation=Reservation()
+        reservation.guest=guest
+        reservation.movie=movie
+        reservation.save()
+        
+        return Response(reservation.data,status=status.HTTP_201_CREATED)
