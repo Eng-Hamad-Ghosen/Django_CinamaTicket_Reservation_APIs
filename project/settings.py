@@ -42,6 +42,14 @@ INSTALLED_APPS = [
     'ticket',
 ]
 
+REST_FRAMEWORK = {
+    # 'DEFAULT_AUTHENTICATION_CLASSES':['rest_framework.authentication.BasicAuthentication'],
+    # #Types of Authentication [BasicAuthentication , TokenAuthentication]
+    
+    # 'DEFAULT_PERMISSION_CLASSES':['rest_framework.permissions.IsAuthenticated'],
+    # #Types Of Permissions [AllowAny , IsAuthenticated , IsAdminUser , IsAuthenticatedReadOnly]
+}
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

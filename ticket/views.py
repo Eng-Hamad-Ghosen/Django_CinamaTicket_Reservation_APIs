@@ -11,6 +11,9 @@ from rest_framework.response import Response
 from rest_framework import status,filters
 
 from rest_framework import generics,mixins,viewsets
+
+from rest_framework.authentication import BasicAuthentication,TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 # Create your views here.
 
 #1 without Resetframework and no model query
@@ -165,10 +168,19 @@ class Generics_list(generics.ListCreateAPIView):
     queryset=Guest.objects.all()
     serializer_class=GuestSerializer
     
+    #Add Authentication and Permissin
+    authentication_classes = [BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+    
 #6.2 [GET , PUT , DELETE] With pk
 class Generics_pk(generics.RetrieveUpdateDestroyAPIView):
     queryset = Guest.objects.all()
     serializer_class=GuestSerializer
+    
+    #Add Authentication and Permissin
+    authentication_classes = [BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+    
  
  #7 Viewsets   
 #7 Viewsets [GET,POST, PUT , DELETE]Guest With pk and Without
@@ -208,21 +220,38 @@ def find_movie(request):
 @api_view(['GET','POST'])
 def create_reservation(request):
     if request.method=='GET':
-        res=Reservation.objects.all()
-        serializer=ReservationSerializer(res,many=True)
+        reservation=Reservation.objects.all()
+        serializer=ReservationSerializer(reservation,many=True)
         return Response(serializer.data)
     
     if request.method=='POST':
-        movie=Movie.objects.get(hall=request.data['hall'],movie=request.data['movie'])
+        movie=Movie.objects.get(movie=request.data['movie'],hall=request.data['hall'])
+        try:
+            guest1=Guest.objects.get(name=request.data['name'],mobile=request.data['mobile'])
+            if movie and guest1:
+                res=Reservation(guest=guest1,movie=movie)
+                res.save()
+                return Response(request.data,status=status.HTTP_201_CREATED)
+        except :
+            
+            guest=Guest(name=request.data['name'],mobile=request.data['mobile'])
+            guest.save()
+            res=Reservation(guest=guest,movie=movie)
+            res.save()
+            return Response(request.POST,status=status.HTTP_201_CREATED)
         
-        guest=Guest()
-        guest.name=request.data['name']
-        guest.mobile=request.data['mobile']
-        guest.save()
+        ##
+        # movie=Movie.objects.get(hall=request.data['hall'],movie=request.data['movie'])
         
-        reservation=Reservation()
-        reservation.guest=guest
-        reservation.movie=movie
-        reservation.save()
+        # guest=Guest()
+        # guest.name=request.data['name']
+        # guest.mobile=request.data['mobile']
+        # guest.save()
         
-        return Response(reservation.data,status=status.HTTP_201_CREATED)
+        # reservation=Reservation()
+        # reservation.guest=guest
+        # reservation.movie=movie
+        # reservation.save()
+        
+        # return Response(reservation.data,status=status.HTTP_201_CREATED)
+        

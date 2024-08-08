@@ -58,6 +58,9 @@ urlpatterns = [
     #8 Find movie
     path('rest/findMove/',views.find_movie),
     
-    #9 create reservation
+    #9 Create reservation
     path('rest/createReservation/',views.create_reservation),
+    
+    #10 REST AUTH URLs
+    path('api-auth/',include('rest_framework.urls'))
 ]

@@ -27,4 +27,4 @@ class Reservation(models.Model):
     movie=models.ForeignKey("Movie",related_name='reservation_movie',on_delete=models.CASCADE)
     
     def __str__(self):
-        return self.guest.name +'/\\'+ self.movie.movie
+        return self.guest.name +' -&- '+ self.movie.movie
