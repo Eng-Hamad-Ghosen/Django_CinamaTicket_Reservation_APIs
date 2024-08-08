@@ -169,20 +169,37 @@ class Generics_list(generics.ListCreateAPIView):
 class Generics_pk(generics.RetrieveUpdateDestroyAPIView):
     queryset = Guest.objects.all()
     serializer_class=GuestSerializer
-    
-#Viewsets [GET,POST, PUT , DELETE]Guest With pk and Without
+ 
+ #7 Viewsets   
+#7 Viewsets [GET,POST, PUT , DELETE]Guest With pk and Without
 class Viewsets_guest(viewsets.ModelViewSet):
     queryset = Guest.objects.all()
     serializer_class=GuestSerializer
 
-#Viewsets [GET,POST, PUT , DELETE]Movie With pk and Without
+#7Viewsets [GET,POST, PUT , DELETE]Movie With pk and Without
 class Viewsets_movie(viewsets.ModelViewSet):
     queryset=Movie.objects.all()
     serializer_class=MovieSerializer
     filter_backends=[filters.SearchFilter]
     search_fields=['movie','hall']
     
-#Viewsets [GET,POST, PUT , DELETE]Reservation With pk and Without
+#7Viewsets [GET,POST, PUT , DELETE]Reservation With pk and Without
 class Viewsets_reservation(viewsets.ModelViewSet):
     queryset=Reservation.objects.all()
     serializer_class=ReservationSerializer
+    
+#8 Find(GET with pk) Movie FBV 
+@api_view(['GET'])
+# def find_movie(request,name):
+def find_movie(request):
+    if request.method=='GET':
+        try:
+            # movie=Movie.objects.filter(movie=name)
+            movies=Movie.objects.filter(hall=request.data['hall'],movie=request.data['movie'])
+        except Movie.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        
+        serializer=MovieSerializer(movies,many=True)
+        return Response(serializer.data,status=status.HTTP_302_FOUND)
+    else:
+        return Response(status=status.HTTP_400_BAD_REQUEST)

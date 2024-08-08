@@ -54,4 +54,7 @@ urlpatterns = [
     
     #7 Viewsets [GET,POST, PUT , DELETE] With pk and Without
     path('rest/viewset/',include(router.urls)),
+    
+    #8 Find movie
+    path('rest/findMove/',views.find_movie),
 ]
