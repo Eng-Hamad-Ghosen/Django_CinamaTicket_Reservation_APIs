@@ -8,7 +8,7 @@ from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status,filters
 
 from rest_framework import generics,mixins,viewsets
 # Create your views here.
@@ -170,8 +170,19 @@ class Generics_pk(generics.RetrieveUpdateDestroyAPIView):
     queryset = Guest.objects.all()
     serializer_class=GuestSerializer
     
-#Viewsets [GET,POST, PUT , DELETE] With pk and Without
+#Viewsets [GET,POST, PUT , DELETE]Guest With pk and Without
 class Viewsets_guest(viewsets.ModelViewSet):
     queryset = Guest.objects.all()
     serializer_class=GuestSerializer
+
+#Viewsets [GET,POST, PUT , DELETE]Movie With pk and Without
+class Viewsets_movie(viewsets.ModelViewSet):
+    queryset=Movie.objects.all()
+    serializer_class=MovieSerializer
+    filter_backends=[filters.SearchFilter]
+    search_fields=['movie','hall']
     
+#Viewsets [GET,POST, PUT , DELETE]Reservation With pk and Without
+class Viewsets_reservation(viewsets.ModelViewSet):
+    queryset=Reservation.objects.all()
+    serializer_class=ReservationSerializer

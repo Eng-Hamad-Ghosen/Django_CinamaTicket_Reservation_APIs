@@ -17,12 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from ticket import views
-
 from rest_framework.routers import DefaultRouter
 
 #Viewset
 router=DefaultRouter()
 router.register('guest',views.Viewsets_guest)
+router.register('movie',views.Viewsets_movie)
+router.register('reservation',views.Viewsets_reservation)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
