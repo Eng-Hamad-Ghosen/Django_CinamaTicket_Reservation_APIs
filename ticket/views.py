@@ -169,8 +169,8 @@ class Generics_list(generics.ListCreateAPIView):
     serializer_class=GuestSerializer
     
     #Add Authentication and Permissin
-    authentication_classes = [BasicAuthentication]
-    permission_classes = [IsAuthenticated]
+    # authentication_classes = [TokenAuthentication]
+    # permission_classes = [IsAuthenticated]
     
 #6.2 [GET , PUT , DELETE] With pk
 class Generics_pk(generics.RetrieveUpdateDestroyAPIView):
@@ -178,8 +178,8 @@ class Generics_pk(generics.RetrieveUpdateDestroyAPIView):
     serializer_class=GuestSerializer
     
     #Add Authentication and Permissin
-    authentication_classes = [BasicAuthentication]
-    permission_classes = [IsAuthenticated]
+    # authentication_classes = [TokenAuthentication]
+    # permission_classes = [IsAuthenticated]
     
  
  #7 Viewsets   

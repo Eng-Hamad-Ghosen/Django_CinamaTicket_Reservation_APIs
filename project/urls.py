@@ -17,7 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from ticket import views
+
 from rest_framework.routers import DefaultRouter
+from rest_framework.authtoken.views import obtain_auth_token
 
 #Viewset
 router=DefaultRouter()
@@ -61,6 +63,9 @@ urlpatterns = [
     #9 Create reservation
     path('rest/createReservation/',views.create_reservation),
     
-    #10 REST AUTH URLs
-    path('api-auth/',include('rest_framework.urls'))
+    #10 REST BASIC_AUTH URLs
+    path('api-auth/',include('rest_framework.urls')),
+    
+    #11 RESt TOKEN_AUTH URLs
+    path('api-auth-token/',obtain_auth_token),
 ]
