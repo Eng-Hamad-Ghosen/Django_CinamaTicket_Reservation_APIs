@@ -68,4 +68,11 @@ urlpatterns = [
     
     #11 RESt TOKEN_AUTH URLs
     path('api-auth-token/',obtain_auth_token),
+    
+    #10.1 Generics [GET , POST , PUT , DELETE]Post
+    path('post/generic/',views.Post_list.as_view()),
+    
+    #10.2 Generics [GET , POST , PUT , DELETE]Post With pk
+    path('post/generic/<int:pk>',views.Post_pk.as_view())
+
 ]

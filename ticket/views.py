@@ -1,19 +1,21 @@
 from django.shortcuts import render
 from django.http.response import JsonResponse
-from.models import Guest,Movie,Reservation
-from .serializers import GuestSerializer,MovieSerializer,ReservationSerializer
+from.models import Guest , Movie , Reservation , Post
+from .serializers import GuestSerializer , MovieSerializer, PostSerializer , ReservationSerializer
 
 
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 
 from rest_framework.response import Response
-from rest_framework import status,filters
+from rest_framework import status , filters
 
-from rest_framework import generics,mixins,viewsets
+from rest_framework import generics , mixins , viewsets
 
-from rest_framework.authentication import BasicAuthentication,TokenAuthentication
+from rest_framework.authentication import BasicAuthentication , TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+
+from .permissions import IsAutherOrReadOnly
 # Create your views here.
 
 #1 without Resetframework and no model query
@@ -254,4 +256,19 @@ def create_reservation(request):
         # reservation.save()
         
         # return Response(reservation.data,status=status.HTTP_201_CREATED)
-        
+
+#10.1 Generics [GET , POST] Post
+class Post_list(generics.ListCreateAPIView):
+    queryset=Post.objects.all()
+    serializer_class=PostSerializer
+    
+    # authentication_classes=[TokenAuthentication]
+    permission_classes=[IsAutherOrReadOnly]
+    
+#10.2 Generics [GET , POST , PUT , DELETE] Post With pk
+class Post_pk(generics.RetrieveUpdateDestroyAPIView):
+    queryset=Post.objects.all()
+    serializer_class=PostSerializer
+    
+    # authentication_classes=[TokenAuthentication]
+    permission_classes=[IsAutherOrReadOnly]
